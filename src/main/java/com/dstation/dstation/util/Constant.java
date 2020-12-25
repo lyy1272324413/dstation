@@ -9,5 +9,5 @@ public class Constant {
      */
     public static final String USER_DEFAULT_ICON = "default.jpg";
     public static final Float USER_WEALTH = 0f;
-    public static final String USER_SIGNATURE = "";
+    public static final String USER_SIGNATURE = ""; //默认个性签名
 }
