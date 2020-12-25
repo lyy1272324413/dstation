@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>DStation</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="/css/userLoginAndRegisterCss/demo.css" />
+    <link rel="stylesheet" type="text/css" href="/css/userLoginAndRegisterCss/style2.css" />
+    <link rel="stylesheet" type="text/css" href="/css/userLoginAndRegisterCss/animate-custom.css" />
+    <!-- 引入jquery -->
+    <script src="/webjars/jquery/3.1.1/jquery.js"></script>
+    <script src="/js/sweetAlert.js"></script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Welcome to <span>DStation</span></h1>
+        </header>
+        <section>
+            <div id="container_demo" >
+                <a class="hiddenanchor" id="toregister"></a>
+                <a class="hiddenanchor" id="tologin"></a>
+                <div id="wrapper">
+                    <div id="login" class="animate form">
+                        <form autocomplete="on">
+                            <h1>Log in</h1>
+                            <p>
+                                <label for="userPhoneLogin" class="uname" data-icon="u" > Please Input Your UserPhone</label>
+                                <input id="userPhoneLogin" name="userPhone" required="required" type="text" placeholder="Your UserPhone"/>
+                            </p>
+                            <p>
+                                <label for="userPwdLogin" class="youpasswd" data-icon="p"> Please Input Your Password </label>
+                                <input id="userPwdLogin" name="password" required="required" type="password" placeholder="Your Password" />
+                            </p>
+                            <!--<p class="keeplogin">-->
+                                <!--<input type="checkbox" name="loginkeeping" id="loginkeeping" value="loginkeeping" />-->
+                                <!--<label for="loginkeeping">Keep me logged in</label>-->
+                            <!--</p>-->
+                            <p class="login button">
+                                <input type="button" value="Login" id="loginButton"/>
+                            </p>
+                            <p class="change_link">
+                                Not a member yet ?
+                                <a href="#toregister" class="to_register">Join us</a>
+                            </p>
+                        </form>
+                    </div>
+
+                    <div id="register" class="animate form">
+                        <form  autocomplete="on">
+                            <h1> Sign up </h1>
+                            <p>
+                                <label for="userPhoneRegister" class="youmail" data-icon="u">Please Input Your PhoneNumber</label>
+                                <input id="userPhoneRegister" name="userPhone" required="required" type="text" placeholder="Your PhoneNumber"/>
+                            </p>
+                            <p>
+                                <label for="userNameRegister" class="uname" data-icon="u">Please Input Your Username</label>
+                                <input id="userNameRegister" name="userName" required="required" type="text" placeholder="Your Username" />
+                            </p>
+                            <p>
+                            <p>
+                                <label for="userPwdRegister" class="youpasswd" data-icon="p">Please Input Your Password </label>
+                                <input id="userPwdRegister" name="userPwd" required="required" type="password" placeholder="Your Password"/>
+                            </p>
+                            <p>
+                                <label for="userPwdConfirmRegister" class="youpasswd" data-icon="p">Please confirm your Password </label>
+                                <input id="userPwdConfirmRegister" name="userPwdConfirm" required="required" type="password" placeholder="Your confirm Password"/>
+                            </p>
+                            <p class="signin button">
+                                <input type="button" id="registerButton" value="Sign up"/>
+                            </p>
+                            <p class="change_link">
+                                Already a member ?
+                                <a href="#tologin" class="to_register"> Go and log in </a>
+                            </p>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</body>
+    <script>
+        /**
+         * 定义去除前后空格的函数
+         * @param str
+         * @returns {void | string}
+         */
+        function trimBlank(str){
+            if(str == null) {
+                return "";
+            }
+            return str.replace(/(^\s+)|(^\s+$)/g,"")
+        }
+
+        /**
+         * 点击注册按钮进行校验并提交
+         */
+        $("#registerButton").click(function () {
+            var userPhoneCont = $("#userPhoneRegister").val();
+            var userNameCont = $("#userNameRegister").val();
+            var userPwdCont = $("#userPwdRegister").val();
+            var userPwdConfirmCont = $("#userPwdConfirmRegister").val();
+            var userPhoneReg = /^1[3|4|5|7|8]\d{9}$/;  //定义手机号码的正则表达式
+            var userNameReg = /^[u4e00-u9fa5·0-9A-z_]{4,20}$/;    // 4~20位中文、字母、数字
+            var userPwd = /^.*(?=.{6,})(?=.*\d)(?=.*[A-Z])(?=.*[a-z])(?=.*[!@#$%^&*?\.]).*$/;    //密码强度正则，最少6位，包括至少1个大写字母，1个小写字母，1个数字，1个特殊字符
+            //1. 首先判断输入内容是否为空
+            if(trimBlank(userPhoneCont) === "") {
+                swal("Warning", "手机号码不能为空！", "warning");
+                return;
+            } else if(trimBlank(userNameCont) === ""){
+                swal("Warning", "用户名不能为空！", "warning");
+                return;
+            } else if(trimBlank(userPwdCont) === "") {
+                swal("Warning", "密码不能为空！", "warning");
+                return;
+            } else if(trimBlank(userPwdConfirmCont) === "") {
+                swal("Warning", "确认密码不能为空！", "warning");
+                return;
+            }
+            //2. 判断密码是否一致
+            if(userPwdCont !== userPwdConfirmCont) {
+                swal("警告", "密码和确认密码不一致！", "warning");
+                return;
+            }
+            //3. 正则表达式判断
+            if(userPhoneReg.test(userPhoneCont) === false) {
+                swal("Warning", "手机号码格式不正确！", "warning");
+                return;
+            } else if(userNameReg.test(userNameCont) === false) {
+                swal("Warning", "请输入4到20位中文、字母、数字、下划线组成的用户名！", "warning");
+                return;
+            } else if(userPwd.test(userPwdCont) === false) {
+                swal("Warning", "密码包括至少1个大写字母，1个小写字母，1个数字，1个特殊字符组成！", "warning");
+                return;
+            }
+
+            // 4. ajax发送url请求到服务器,判断是否存在该用户以及保存用户信息
+            $.ajax(
+                {
+                    type: "POST",
+                    url: "/user/saveUserInfo",
+                    async: false,
+                    cache: true,
+                    data: {
+                        "userPhone": userPhoneCont,
+                        "userName": userNameCont,
+                        "userPwd": userPwdCont
+                    },
+                    success: function (data) {
+                        if(data["isExist"] == true) {
+                            swal("Error", "该手机号码已被注册！", "error");
+                        } else {
+                            if(data["saveResult"] == true) {
+                                swal("Success", "注册成功", "success");
+                            } else {
+                                swal("Error", "注册失败！", "error");
+                            }
+                        }
+                    },
+                    error: function (data) {
+                        swal("Error", "网络错误，请联系管理员！", "error");
+                    }
+                }
+            );
+        });
+
+        /**
+         * 点击登录按钮
+         */
+        $("#loginButton").click(function () {
+            var userPhoneCont = $("#userPhoneLogin").val();
+            var userPwdCont = $("#userPwdLogin").val();
+            var userPhoneReg = /^1[3|4|5|7|8]\d{9}$/;  //定义手机号码的正则表达式
+            var userPwd = /^.*(?=.{6,})(?=.*\d)(?=.*[A-Z])(?=.*[a-z])(?=.*[!@#$%^&*?\.]).*$/;    //密码强度正则，最少6位，包括至少1个大写字母，1个小写字母，1个数字，1个特殊字符
+            if((userPhoneReg.test(userPhoneCont) === false) || (userPwd.test(userPwdCont) === false)) {
+                swal("Warning", "输入信息格式错误！", "warning");
+                return;
+            }
+            // 判断该用户是否存在
+            $.ajax(
+                {
+                    type: "POST",
+                    url: "/user/queryUserInfo",
+                    async: false,
+                    cache: true,
+                    data: {
+                        "userPhone": userPhoneCont,
+                        "userPwd": userPwdCont
+                    },
+                    success: function (data) {
+                        if(data["isExist"] == true) {
+                            swal("登录成功!", {
+                                buttons: false,
+                                timer: 1000
+                            });
+                        } else {
+                            swal("Error", "用户名或密码错误！", "error");
+                        }
+                    },
+                    error: function (data) {
+                        swal("Error", "网络错误，请联系管理员！", "error");
+                    }
+                }
+            );
+        });
+    </script>
+</html>

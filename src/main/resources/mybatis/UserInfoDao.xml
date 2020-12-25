@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.dstation.dstation.dao.UserInfoDao">
+    <insert id="insertUserInfo">
+        insert userinfo(userPhone,userName,userPwd,role,wealth,userIcon,userSignature,createDate)
+        values(#{userInfo.userPhone},#{userInfo.userName},#{userInfo.userPwd},#{userInfo.role},#{userInfo.wealth},
+        #{userInfo.userIcon},#{userInfo.userSignature}, sysdate())
+    </insert>
+    <select id="findUserPhoneByUserPhone" resultType="java.lang.String">
+        select userPhone from userinfo where userPhone = #{userPhone}
+    </select>
+    <select id="selectUserInfo" resultType="com.dstation.dstation.domainModel.UserInfo">
+        select * from userinfo where userPhone = #{userInfo.userPhone} and userPwd = #{userInfo.userPwd}
+    </select>
+</mapper>

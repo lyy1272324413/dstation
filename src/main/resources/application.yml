@@ -1,0 +1,29 @@
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/dstation?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
+    username: root
+    password: 1272324413
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  devtools:
+    restart:
+      enabled: true  #设置开启热部署
+      additional-paths: src/main/java #重启目录
+      exclude: WEB-INF/**
+    freemarker:
+      cache: false    #页面不加载缓存，修改即时生效
+# 配置mybatis
+mybatis:
+  # 搜索指定包别名
+  typeAliasesPackage: com.dstation.dstation.domainModel
+  # 配置mapper的扫描，找到所有的mapper.xml映射文件
+  mapperLocations: classpath:mybatis/**/*Dao.xml
+  # 加载全局的配置文件
+  configuration:
+    map-underscore-to-camel-case: true   #支持驼峰映射
+#show mybatis logs
+logging:
+  level:
+    com:
+      dstation:
+        dstation:
+          dao: debug
