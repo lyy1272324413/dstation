@@ -8,7 +8,7 @@ public class Constant {
      * 以下几个为用户信息 的默认值
      */
     public static final String USER_DEFAULT_ICON = "default.jpg";
-    public static final Float USER_WEALTH = 0f;
+    public static final Float USER_WEALTH = 0f;   //Test
     public static final String USER_SIGNATURE = "";
 }
 
