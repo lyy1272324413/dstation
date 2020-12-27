@@ -11,3 +11,4 @@ public class Constant {
     public static final Float USER_WEALTH = 0f;
     public static final String USER_SIGNATURE = "";
 }
+
